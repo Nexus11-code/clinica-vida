@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Pacientes | Clínica Vida{% endblock %}
+{% block content %}
+<h1>Pacientes</h1>
+<div class="duas-colunas">
+<section class="painel">
+<h2>Novo paciente</h2>
+<form method="post" class="formulario">
+<label>Nome completo<input name="nome" required maxlength="100"></label>
+<label>Telefone<input name="telefone" required maxlength="30"></label>
+<label>E-mail<input type="email" name="email"></label>
+<label>Data de nascimento<input type="date" name="data_nascimento"></label>
+<button class="botao" type="submit">Cadastrar paciente</button>
+</form>
+</section>
+<section class="painel">
+<h2>Buscar paciente</h2>
+<form method="get" class="busca"><input name="busca" value="{{ busca }}" placeholder="Digite um nome"><button class="botao" type="submit">Buscar</button></form>
+<div class="lista">
+{% for p in pacientes %}
+<div class="item">
+<div><strong>{{ p.nome }}</strong><small>{{ p.telefone }}{% if p.email %} • {{ p.email }}{% endif %}</small></div>
+<div class="acoes-item"><a href="{{ url_for('editar_paciente', paciente_id=p.id) }}">Editar</a>
+<form method="post" action="{{ url_for('excluir_paciente', paciente_id=p.id) }}" onsubmit="return confirm('Excluir este paciente e suas consultas?')"><button class="link-perigo">Excluir</button></form></div>
+</div>
+{% else %}<p class="vazio">Nenhum paciente encontrado.</p>{% endfor %}
+</div>
+</section>
+</div>
+{% endblock %}

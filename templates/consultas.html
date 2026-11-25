@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Consultas | Clínica Vida{% endblock %}
+{% block content %}
+<h1>Consultas</h1>
+<div class="duas-colunas">
+<section class="painel"><h2>Agendar consulta</h2>
+{% if pacientes %}
+<form method="post" class="formulario">
+<label>Paciente<select name="paciente_id" required><option value="">Selecione</option>{% for p in pacientes %}<option value="{{ p.id }}">{{ p.nome }}</option>{% endfor %}</select></label>
+<label>Profissional de saúde<input name="medico" required placeholder="Ex.: Dra. Ana"></label>
+<label>Data<input type="date" name="data_consulta" required></label>
+<label>Horário<input type="time" name="horario" required></label>
+<label>Motivo<input name="motivo" required maxlength="150"></label>
+<button class="botao">Agendar</button>
+</form>
+{% else %}<p>Cadastre um paciente antes de agendar.</p><a class="botao" href="{{ url_for('pacientes') }}">Cadastrar paciente</a>{% endif %}
+</section>
+<section class="painel"><h2>Consultas registradas</h2>
+<div class="lista">
+{% for c in consultas %}
+<div class="item consulta-item"><div><strong>{{ c.paciente_nome }}</strong><small>{{ c.data_consulta }} às {{ c.horario }} • {{ c.medico }}</small><small>{{ c.motivo }} • {{ c.status }}</small></div>
+<div class="acoes-item"><a href="{{ url_for('editar_consulta', consulta_id=c.id) }}">Editar</a>
+<form method="post" action="{{ url_for('excluir_consulta', consulta_id=c.id) }}" onsubmit="return confirm('Excluir esta consulta?')"><button class="link-perigo">Excluir</button></form></div></div>
+{% else %}<p class="vazio">Nenhuma consulta cadastrada.</p>{% endfor %}
+</div></section></div>
+{% endblock %}

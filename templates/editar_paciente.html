@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Editar paciente | Clínica Vida{% endblock %}
+{% block content %}
+<section class="painel formulario-box"><h1>Editar paciente</h1>
+<form method="post" class="formulario">
+<label>Nome completo<input name="nome" value="{{ paciente.nome }}" required></label>
+<label>Telefone<input name="telefone" value="{{ paciente.telefone }}" required></label>
+<label>E-mail<input type="email" name="email" value="{{ paciente.email or '' }}"></label>
+<label>Data de nascimento<input type="date" name="data_nascimento" value="{{ paciente.data_nascimento or '' }}"></label>
+<button class="botao">Salvar alterações</button><a href="{{ url_for('pacientes') }}">Voltar</a>
+</form></section>
+{% endblock %}

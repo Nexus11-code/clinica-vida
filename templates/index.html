@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Início | Clínica Vida{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">GESTÃO SIMPLES E ORGANIZADA</p>
+  <h1>Bem-vindo à Clínica Vida</h1>
+  <p>Um sistema fictício para organizar pacientes e consultas em um só lugar.</p>
+  <div class="acoes">
+    <a class="botao" href="{{ url_for('pacientes') }}">Gerenciar pacientes</a>
+    <a class="botao secundario" href="{{ url_for('consultas') }}">Ver consultas</a>
+  </div>
+</section>
+<section class="resumo">
+  <article class="painel"><span>Pacientes cadastrados</span><strong>{{ total_pacientes }}</strong></article>
+  <article class="painel"><span>Consultas registradas</span><strong>{{ total_consultas }}</strong></article>
+</section>
+<section class="painel">
+  <h2>Próximas consultas cadastradas</h2>
+  {% if proximas %}
+  <div class="tabela-wrap"><table><thead><tr><th>Paciente</th><th>Profissional</th><th>Data</th><th>Horário</th></tr></thead><tbody>
+  {% for c in proximas %}<tr><td>{{ c.paciente_nome }}</td><td>{{ c.medico }}</td><td>{{ c.data_consulta }}</td><td>{{ c.horario }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<p class="vazio">Ainda não há consultas agendadas.</p>{% endif %}
+</section>
+{% endblock %}
