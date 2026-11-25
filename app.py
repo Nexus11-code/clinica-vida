@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 import sqlite3
 from pathlib import Path
+import os
 
 app = Flask(__name__)
-app.secret_key = "troque-esta-chave-antes-do-deploy"
+app.secret_key = os.environ.get("SECRET_KEY", "chave-local-clinica-vida")
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "clinica.db"
 
